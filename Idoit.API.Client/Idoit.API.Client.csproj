@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://github.com/OKT90/Idoit.API.Client/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/OKT90/Idoit.API.Client/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/OKT90/Idoit.API.Client</PackageProjectUrl>
     <Copyright>synetics GmbH</Copyright>
     <Version>0.1.0</Version>
@@ -12,7 +12,7 @@
     <Authors>Omar Talaat</Authors>
     <RepositoryUrl>https://github.com/OKT90/Idoit.API.Client</RepositoryUrl>
     <Description>To make your i-doit API calls in C#</Description>
-    <PackageTags>cmdb,synetics,client,Api,i-doit,json</PackageTags>
+    <PackageTags>cmdb,synetics,client,Api,i-doit,json,i-doit,JSON-RPC 2.0</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
