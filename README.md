@@ -46,11 +46,11 @@ The following requirements are necessary before installing or using the `Idoit.A
 - There is another way for install or update the `Idoit.API.Client` by executing the following code 
   after clicking on the menu bar `Tools > NuGetPackage Manager > Package Manager Console`
   
-    PM> Install-Package Idoit.API.Client 
+    `PM> Install-Package Idoit.API.Client`
 
     or
 
-    PM> Update-Package Idoit.API.Client
+    `PM> Update-Package Idoit.API.Client`
 
 ## A simple example
 

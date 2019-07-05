@@ -20,7 +20,6 @@ If you like to contribute source code, you will need to clone or download the pr
 
 In the solution you are able to create new classes or namespaces for the project `Idoit.API.Client` and if you are finished writing the new code, you can test it by creating a new method in the respective class in the project `UnitTestApi`.
 
-
 ## Run unit tests
 
 To be sure that the code is working as expected you must write a unit test.
