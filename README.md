@@ -89,10 +89,10 @@ namespace ConsoleApp
  
  If you want to see more examples, click on the following links
 
-- Under `[idoit](docs/idoit.md)` you can search for objects, 
+- Under [idoit](docs/idoit.md) you can search for objects, 
   it is possible to login or logout and it shows you the currently version of  your i-doit.
 
-- Under `[cmdb](docs/cmdb/README.md)` you can easily work with the objects, object types, categories and
+- Under [cmdb](docs/cmdb/README.md) you can easily work with the objects, object types, categories and
   dialog fields.
 
 ## Problems?
@@ -102,6 +102,6 @@ Pull requests are very welcomed. If you like to get involved see file [CONTRIBUT
 
 ## Copyright & license
 
-Copyright (C) 2019 [synetics GmbH](https://i-doit.com/)
+Copyright (C) 2019 [synetics GmbH](https://i-doit.com/en)
 
 [MIT license](LICENSE)
