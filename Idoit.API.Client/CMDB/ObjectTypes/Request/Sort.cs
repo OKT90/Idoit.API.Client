@@ -3,6 +3,6 @@
     public class Sort
     {
         public const string Acsending = "ASC";
-        public const string Deacsending = "DESC";
+        public const string Descending = "DESC";
     }
 }
