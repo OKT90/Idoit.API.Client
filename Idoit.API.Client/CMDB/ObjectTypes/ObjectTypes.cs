@@ -6,14 +6,15 @@ namespace Idoit.API.Client.CMDB.ObjectTypes
 {
     public class ObjectTypes
     {
+        Dictionary<string, object> parameter;
+        List<Result[]> response;
+        public Client client;
+
         public ObjectTypes(Client myClient)
         {
             client = myClient;
         }
 
-        Dictionary<string, object> parameter;
-        List<Result[]> response;
-        public Client client;
         public List<Result[]> Read()
         {
             Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
