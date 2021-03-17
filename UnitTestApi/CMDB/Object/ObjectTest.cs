@@ -2,15 +2,10 @@
 using Idoit.API.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Idoit.API.Client.CMDB.Object.Response;
-using System.Collections.Generic;
-using Idoit.API.Client.CMDB.Object;
-using UnitTestApi.CMDB;
 using System.IO;
 using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
 using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
 using Obj = Idoit.API.Client.CMDB.Object.Object;
-using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
-
 
 namespace UnitTestApi.CMDB.Object
 {
@@ -194,7 +189,7 @@ namespace UnitTestApi.CMDB.Object
             Assert.IsNotNull(list.title);
             Assert.IsNotNull(list.cmdbStatus);
             //Act:Delete the Object
-            request.Purge(objID);
+            request.Delete(objID);
         }
     }
 }
