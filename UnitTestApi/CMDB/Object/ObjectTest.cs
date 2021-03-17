@@ -145,32 +145,6 @@ namespace UnitTestApi.CMDB.Object
             Assert.AreEqual("3", list.status);
         }
 
-
-        //Purge
-        [TestMethod]
-        public void PurgeTest()
-        {
-            //Arrange
-            int objID;
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj request = new Obj(myClient);
-
-            //Act:Create the Object
-            request.type = ObjectType. MONITOR;
-            request.title = "TFT 001";
-            request.cmdbStatus = CmdbStatus.STORED;
-            objID = request.Create();
-
-            //Act:Purge the Object
-            request.Purge(objID);
-
-            //Assert
-            Assert.IsNotNull(objID);
-
-        }
-
         //Update
         [TestMethod]
         public void UpdateTest()
