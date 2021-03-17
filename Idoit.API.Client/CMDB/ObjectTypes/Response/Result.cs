@@ -11,7 +11,7 @@ namespace Idoit.API.Client.CMDB.ObjectTypes.Response
         [JsonProperty("container")]
         public string container { get; set; }
         [JsonProperty("Const")]
-        public string Const { get; set; }
+        public string constant { get; set; }
         [JsonProperty("color")]
         public string color { get; set; }
         [JsonProperty("image")]
