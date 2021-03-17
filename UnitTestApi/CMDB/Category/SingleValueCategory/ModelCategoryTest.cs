@@ -76,37 +76,6 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
-        
-        //[Ignore]
-        //Quickpurge
-        [TestMethod]
-        public void QuickpurgeTest()
-        {
-
-            //Arrange
-            int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
-
-            //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
-
-            //Act: Create the Category
-            categoryRequest.title = "Web GUI";
-            categoryRequest.description = "Web GUI description";
-            categoryRequest.manufacturer = 1;
-            cateId = model.Create(objectId, categoryRequest);
-
-            //Act
-            model.Quickpurge(objectId, cateId);
-        }
 
         //[Ignore]
         //Update
