@@ -73,7 +73,7 @@ namespace UnitTestApi.CMDB.Objects
             //Act:Delete the Objects
             for (int i = 0; i < 10; i++)
             {
-                requestCreate.Purge(ObjectId[i]);
+                requestCreate.Delete(ObjectId[i]);
             }
         }
     }
