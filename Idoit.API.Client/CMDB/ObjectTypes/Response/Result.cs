@@ -24,8 +24,8 @@ namespace Idoit.API.Client.CMDB.ObjectTypes.Response
         public string treeGroup { get; set; }
         [JsonProperty("status")]
         public string status { get; set; }
-        [JsonProperty("typeGroup")]
-        public string type_group { get; set; }
+        [JsonProperty("type_group")]
+        public string typeGroup { get; set; }
         [JsonProperty("type_group_title")]
         public string typeGroupTitle { get; set; }
     }
