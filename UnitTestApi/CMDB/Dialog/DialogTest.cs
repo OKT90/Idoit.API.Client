@@ -73,7 +73,7 @@ namespace UnitTestApi.CMDB.Dialog
                 {
                     Assert.IsNotNull(element.id);
                     Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.Const);
+                    Assert.IsNotNull(element.constant);
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace UnitTestApi.CMDB.Dialog
                 {
                     Assert.IsNotNull(element.id);
                     Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.Const);
+                    Assert.IsNotNull(element.constant);
                 }
             }
             //Act:Delete the Value
