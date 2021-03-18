@@ -31,7 +31,7 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
         {
             string customId = "";
             string objectTypeId = "";
-            List<Result[]> lists = new List<Result[]>();
+            List<Result[]> objectTypes = new List<Result[]>();
             List<Customs> custom = new List<Customs>();
             ObjectTypeCategoriesResult objectTypeCategoriesResult = new ObjectTypeCategoriesResult();
 
@@ -41,8 +41,8 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
             ObjectTypesRead request = new ObjectTypesRead(myClient);
             ObjectTypesCreate requestCreate = new ObjectTypesCreate(myClient);
             Categories objectTypeCategories = new Categories(myClient);
-            lists = request.Read();
-            foreach (Result[] row in lists)
+            objectTypes = request.Read();
+            foreach (Result[] row in objectTypes)
             {
                 foreach (Result element in row)
                 {
