@@ -15,6 +15,7 @@ namespace UnitTestApi.CMDB.ObjectTypes
         string URL;
         string APIKEY;
         string LANGUAGE;
+
         public ObjectTypesTest()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
@@ -27,7 +28,6 @@ namespace UnitTestApi.CMDB.ObjectTypes
         [TestMethod]
         public void ReadTest()
         {
-            string costumId = "";
             string objectTypeId = "";
             List<Result[]> lists = new List<Result[]>();
 
