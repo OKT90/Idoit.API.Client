@@ -29,7 +29,7 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
         [TestMethod]
         public void ReadTest()
         {
-            string costumId = "";
+            string customId = "";
             string objectTypeId = "";
             List<Result[]> lists = new List<Result[]>();
             List<Customs> custom = new List<Customs>();
@@ -59,10 +59,10 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
             {
                 if (element.title == "Diary")
                 {
-                    costumId = element.id;
+                    customId = element.id;
                 }
             }
-            Assert.IsNotNull(costumId);
+            Assert.IsNotNull(customId);
         }
     }
 }
