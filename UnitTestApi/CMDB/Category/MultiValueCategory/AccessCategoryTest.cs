@@ -136,7 +136,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
 
             //Arrange
             int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -157,7 +157,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             cateId = access.Create(objectId, categoryRequest);
 
             //Act
-            access.Quickpurge(objectId, cateId); 
+            access.Quickpurge(objectId, cateId);
         }
 
         //Update

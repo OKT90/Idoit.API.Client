@@ -76,7 +76,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
-        
+
         //[Ignore]
         //Quickpurge
         [TestMethod]
@@ -85,7 +85,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 
             //Arrange
             int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);

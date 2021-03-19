@@ -94,7 +94,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             Location Location = new Location(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType. CLIENT;
+            objectRequest.type = ObjectType.CLIENT;
             objectRequest.title = " My Client";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
