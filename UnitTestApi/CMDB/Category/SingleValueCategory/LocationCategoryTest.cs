@@ -79,6 +79,38 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         }
 
         //[Ignore]
+        //Quickpurge
+        [TestMethod]
+        public void QuickpurgeTest()
+        {
+
+            //Arrange
+            int cateId, objectId;
+            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            myClient.Username = "admin";
+            myClient.Password = "admin";
+            Obj objectRequest = new Obj(myClient);
+            LocationRequset categoryRequest = new LocationRequset();
+            Location Location = new Location(myClient);
+
+            //Act:Create the Object
+            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.title = " My Client";
+            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectId = objectRequest.Create();
+
+            //Act: Create the Category
+            categoryRequest.latitude = "12";
+            categoryRequest.longitude = "323";
+            categoryRequest.snmp_syslocation = "23";
+            categoryRequest.description = "Web GUI description";
+            cateId = Location.Create(objectId, categoryRequest);
+
+            //Act
+            Location.Quickpurge(objectId, cateId);
+        }
+
+        //[Ignore]
         //Update
         [TestMethod]
         public void UpdateTest()

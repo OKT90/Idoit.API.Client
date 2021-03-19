@@ -129,6 +129,37 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
 
         }
 
+        //Quickpurge
+        [TestMethod]
+        public void QuickpurgeTest()
+        {
+
+            //Arrange
+            int cateId, objectId;
+            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            myClient.Username = "admin";
+            myClient.Password = "admin";
+            Obj objectRequest = new Obj(myClient);
+            AccessRequset categoryRequest = new AccessRequset();
+            Access access = new Access(myClient);
+
+            //Act:Create the Object
+            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.title = " My Client";
+            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectId = objectRequest.Create();
+
+            //Act: Create the Category
+            categoryRequest.title = "Web GUI";
+            categoryRequest.description = "Web GUI description";
+            categoryRequest.type = " ES";
+            categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
+            cateId = access.Create(objectId, categoryRequest);
+
+            //Act
+            access.Quickpurge(objectId, cateId);
+        }
+
         //Update
         [TestMethod]
         public void UpdateTest()
