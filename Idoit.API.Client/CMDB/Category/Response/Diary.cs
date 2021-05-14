@@ -17,6 +17,5 @@ namespace Idoit.API.Client.CMDB.Category.Response
         public string entry { get; set; }
         [JsonProperty("description")]
         public string description { get; set; }
-
     }
 }
