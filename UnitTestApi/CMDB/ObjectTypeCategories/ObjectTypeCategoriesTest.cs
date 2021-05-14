@@ -18,7 +18,9 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
         string URL;
         string APIKEY;
         string LANGUAGE;
-        public ObjectTypeCategoriesTest()
+
+        [TestInitialize]
+        public void Setup()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
             DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
@@ -29,10 +31,10 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
         [TestMethod]
         public void ReadTest()
         {
-            string customId = "";
+            string custom = "";
             string objectTypeId = "";
             List<Result[]> objectTypes = new List<Result[]>();
-            List<Customs> custom = new List<Customs>();
+            List<Customs> customlist = new List<Customs>();
             ObjectTypeCategoriesResult objectTypeCategoriesResult = new ObjectTypeCategoriesResult();
 
             Client myClient = new Client(URL, APIKEY, LANGUAGE);
@@ -54,15 +56,15 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
                 }
             }
             objectTypeCategoriesResult = objectTypeCategories.Read(objectTypeId);
-            custom = objectTypeCategoriesResult.Custom;
-            foreach (Customs element in custom)
+            customlist = objectTypeCategoriesResult.Custom;
+            foreach (Customs element in customlist)
             {
                 if (element.title == "Diary")
                 {
-                    customId = element.id;
+                    custom = element.id;
                 }
             }
-            Assert.IsNotNull(customId);
+            Assert.IsNotNull(custom);
         }
     }
 }
