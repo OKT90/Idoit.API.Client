@@ -16,7 +16,8 @@ namespace UnitTestApi.CMDB.ObjectTypes
         string APIKEY;
         string LANGUAGE;
 
-        public ObjectTypesTest()
+        [TestInitialize]
+        public void Setup()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
             DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
