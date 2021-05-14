@@ -7,6 +7,6 @@ namespace Idoit.API.Client.CMDB.Category.Response.Attribute
         [JsonProperty("title")]
         public string date { get; set; }
         [JsonProperty("prop_type")]
-        public string typ { get; set; }
+        public string type { get; set; }
     }
 }
