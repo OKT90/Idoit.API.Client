@@ -12,7 +12,7 @@ namespace Idoit.API.Client.CMDB.Category.Response.Attribute
         [JsonProperty("title")]
         public string title { get; set; }
         [JsonProperty("const")]
-        public string Const { get; set; }
+        public string constant { get; set; }
         [JsonProperty("title_lang")]
         public string titleLang { get; set; }
     }

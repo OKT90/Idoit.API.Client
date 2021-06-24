@@ -10,7 +10,7 @@ namespace Idoit.API.Client.CMDB.Dialog.Response
         [JsonProperty("id")]
         public string id { get; set; }
         [JsonProperty("Const")]
-        public string Const { get; set; }
+        public string constant { get; set; }
         [JsonProperty("title")]
         public string title{ get; set; }
    }
