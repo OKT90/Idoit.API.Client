@@ -2,10 +2,10 @@
 
 namespace Idoit.API.Client.CMDB.Category.Response.Attribute
 {
-   public class Primary
+    public class DNSDomain : Attribute
     {
-        [JsonProperty("value")]
-        public string value { get; set; }
+        [JsonProperty("id")]
+        public string id { get; set; }
         [JsonProperty("title")]
         public string title { get; set; }
     }
