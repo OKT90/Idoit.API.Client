@@ -2,7 +2,7 @@
 
 namespace Idoit.API.Client.CMDB.Category.Response.Attribute
 {
-   public class Primary
+    public class Active : Attribute
     {
         [JsonProperty("value")]
         public string value { get; set; }

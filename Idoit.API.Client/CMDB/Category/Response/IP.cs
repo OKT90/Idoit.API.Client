@@ -1,8 +1,5 @@
 ﻿using Idoit.API.Client.CMDB.Category.Response.Attribute;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Idoit.API.Client.CMDB.Category.Response
 {
@@ -11,30 +8,53 @@ namespace Idoit.API.Client.CMDB.Category.Response
         [JsonProperty("id")]
         public string id { get; set; }
         [JsonProperty("objID")]
-        public string objID { get; set; }
-        public IPVAddress[] primary_hostaddress { get; set; }
+        public string objId { get; set; }
+        [JsonProperty("primary_layer3_net")]
+        public PrimaryLayer3Net primaryLayer3Net { get; set; }
+        [JsonProperty("primary_hostaddress")]
+        public PrimaryHostAddress primaryHostAddress { get; set; }
         [JsonProperty("primary_hostname")]
-        public string primaryHostname { get; set; }
-        public DialogPlus net_type { get; set; }
+        public string primaryHostName { get; set; }
+        [JsonProperty("net_type")]
+        public NetType netType { get; set; }
         public Primary primary { get; set; }
-        public Primary active { get; set; }
+        public Active active { get; set; }
         public Net net { get; set; }
-        public IPVAddress ipv4_address { get; set; }
-        public DialogPlus ipv6_assignment { get; set; }
-        public DialogPlus ipv6_scope { get; set; }
-        public IPVAddress ipv6_address { get; set; }
-        public IPVAddress hostaddress { get; set; }
+        public string zone { get; set; }
+        [JsonProperty("ipv4_assignment")]
+        public IpV4Assignment iPV4Assignment { get; set; }
+        [JsonProperty("ipv4_address")]
+        public IPV4Address iPV4Address { get; set; }
+        [JsonProperty("ipv6_assignment")]
+        public IPV6Assignment iPV6Assignment { get; set; }
+        [JsonProperty("ipv6_scope")]
+        public IPV6Scope iPV6Scope { get; set; }
+        [JsonProperty("ipv6_address")]
+        public IPV6Address iPV6Address { get; set; }
+        [JsonProperty("hostaddress")]
+        public HostAddress hostAddress { get; set; }
         [JsonProperty("hostname")]
-        public string hostname { get; set; }
+        public string hostName { get; set; }
         [JsonProperty("domain")]
         public string domain { get; set; }
-        public string dns_server_address { get; set; }
-        public Value use_standard_gateway { get; set; }
+        [JsonProperty("dns_server")]
+        public string DNSServer { get; set; }
+        [JsonProperty("dns_server_address")]
+        public string DNSServerAddress { get; set; }
+        [JsonProperty("dns_domain")]
+        public DNSDomain[] DNSDomain { get; set; }
+        [JsonProperty("use_standard_gateway")]
+        public UseStandardGateway useStandardGateway { get; set; }
+        [JsonProperty("assigned_port")]
+        public string assignedPort { get; set; }
+        [JsonProperty("assigned_logical_port")]
+        public string assignedLogicalPort { get; set; }
         [JsonProperty("all_ips")]
         public string allIps { get; set; }
         [JsonProperty("primary_fqdn")]
-        public string primaryFqdn { get; set; }
-        //public Alias[] aliases { get; set; }
+        public PrimaryFqdn[] primaryFqdn { get; set; }
+        [JsonProperty("aliases")]
+        public Alias[] alias { get; set; }
         [JsonProperty("description")]
         public string description { get; set; }
     }
