@@ -1,7 +1,4 @@
-﻿using Anemonis.JsonRpc.ServiceClient;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category

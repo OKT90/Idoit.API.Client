@@ -8,6 +8,7 @@ using DiaryResponse = Idoit.API.Client.CMDB.Category.Response.Diary;
 using Obj = Idoit.API.Client.CMDB.Object.Object;
 using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
 using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
+using Result = Idoit.API.Client.CMDB.Object.Response.Result;
 using System.IO;
 
 namespace UnitTestApi.CMDB.Category.MultiValueCategory
@@ -33,7 +34,6 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
         }
 
-
         //Create
         [TestMethod]
         public void CreateTest()
@@ -49,13 +49,13 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             Diary diary = new Diary(myClient);
             //Act:Create the Object
             objectRequest.type = ObjectType.SERVER;
-            objectRequest.title = "Server01";
+            objectRequest.title = "My Server";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.f_wysiwyg_c_1581927732804 = "Test the Entry";
-            categoryRequest.f_popup_c_1581927717973 = "2001-04-04";
+            categoryRequest.f_wysiwyg_c_1581927732804 = "New Entry";
+            categoryRequest.f_popup_c_1581927717973 = "2021-02-01";
             cateId = diary.Create(objectId, categoryRequest);
 
             //Assert
@@ -77,6 +77,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
+
         //Delete
         [TestMethod]
         public void DeleteTest()
@@ -93,13 +94,13 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
 
             //Act:Create the Object
             objectRequest.type = ObjectType.SERVER;
-            objectRequest.title = "Server01";
+            objectRequest.title = "My Server";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.f_wysiwyg_c_1581927732804 = "Install a software";
-            categoryRequest.f_popup_c_1581927723207 = 522;
+            categoryRequest.f_wysiwyg_c_1581927732804 = "New Entry";
+            categoryRequest.f_popup_c_1581927717973 = "2020-04-04";
             cateId = diary.Create(objectId, categoryRequest);
 
             //Act
@@ -126,7 +127,6 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
             Client myClient = new Client(URL, APIKEY, LANGUAGE);
@@ -138,13 +138,13 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
 
             //Act:Create the Object
             objectRequest.type = ObjectType.SERVER;
-            objectRequest.title = "Server01";
+            objectRequest.title = "My Server";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.f_wysiwyg_c_1581927732804 = "Install a software";
-            categoryRequest.f_popup_c_1581927723207 = 522;
+            categoryRequest.f_wysiwyg_c_1581927732804 = "New Entry";
+            categoryRequest.f_popup_c_1581927717973 = "2020-04-04";
             cateId = diary.Create(objectId, categoryRequest);
 
             //Act: Delete the Category
@@ -159,49 +159,72 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         public void UpdateTest()
         {
             //Arrange
-            int cateId, objectId;
+            int cateId, objectIdServer, objectIdPerson01, objectIdPerson02;
             List<DiaryResponse[]> list = new List<DiaryResponse[]>();
             Client myClient = new Client(URL, APIKEY, LANGUAGE);
             myClient.Username = "admin";
             myClient.Password = "admin";
+            Result readObject = new Result();
             Obj objectRequest = new Obj(myClient);
             DiaryRequset categoryRequest = new DiaryRequset();
             Diary diary = new Diary(myClient);
 
-            //Act:Create the Object
+            //Act:Create the Object Server
             objectRequest.type = ObjectType.SERVER;
-            objectRequest.title = "Server01";
+            objectRequest.title = "MY Server";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectIdServer = objectRequest.Create();
+
+            //Act:Create the Object Person 1
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person01";
+            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectIdPerson01 = objectRequest.Create();
+
+            //Act:Create the Object Person 2
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person02";
+            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectIdPerson02 = objectRequest.Create();
+
+            //Act:Read the Object Person 1
+            readObject = objectRequest.Read(objectIdPerson01);
 
             //Act: Create the Category
-            categoryRequest.f_wysiwyg_c_1581927732804 = "Install a software";
-            categoryRequest.f_popup_c_1581927723207 = 522;
-            cateId = diary.Create(objectId, categoryRequest);
+            categoryRequest.f_wysiwyg_c_1581927732804 = "New Entry";
+            categoryRequest.f_popup_c_1581927717973 = "2020-04-04";
+            categoryRequest.f_popup_c_1581927723207 = readObject.id;
+            cateId = diary.Create(objectIdServer, categoryRequest);
+
+            //Act:Read the Object Person 2
+            readObject = objectRequest.Read(objectIdPerson02);
 
             //Act: Update the Category
-            categoryRequest.description = "Test the description";
             categoryRequest.f_wysiwyg_c_1581927732804 = "Install a software";
-            categoryRequest.f_popup_c_1581927723207 = 522;
+            categoryRequest.f_popup_c_1581927717973 = "2021-04-01";
+            categoryRequest.f_popup_c_1581927723207 = readObject.id;
             categoryRequest.category_id = cateId;
-            diary.Update(objectId, categoryRequest);
+            diary.Update(objectIdServer, categoryRequest);
 
             //Act:Read the Category
             categoryRequest.category_id = cateId;
-            list = diary.Read(objectId);
+            list = diary.Read(objectIdServer);
 
             //Assert
             foreach (DiaryResponse[] row in list)
             {
                 foreach (DiaryResponse element in row)
                 {
-                    Assert.AreEqual("Test the description", categoryRequest.description);
+                    Assert.AreEqual("2021-04-01", categoryRequest.f_popup_c_1581927717973);
                 }
             }
 
-            //Act:Delete the Object
-            objectRequest.Delete(objectId);
-
+            //Act:Delete the Object Server
+            objectRequest.Delete(objectIdServer);
+            //Act:Delete the Object Person 1
+            objectRequest.Delete(objectIdPerson01);
+            //Act:Delete the Object Person 2
+            objectRequest.Delete(objectIdPerson02);
         }
 
         //Read
@@ -220,14 +243,13 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
 
             //Act:Create the Object
             objectRequest.type = ObjectType.SERVER;
-            objectRequest.title = "Server01";
+            objectRequest.title = "My Server";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.f_wysiwyg_c_1581927732804 = "Install a software";
-            categoryRequest.f_popup_c_1581927723207 = 522;
-            categoryRequest.description = "Test the description";
+            categoryRequest.f_wysiwyg_c_1581927732804 = "New Entry";
+            categoryRequest.f_popup_c_1581927717973 = "2022-03-04";
             cateId = diary.Create(objectId, categoryRequest);
 
             //Act:Read the Category
@@ -239,7 +261,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             {
                 foreach (DiaryResponse element in row)
                 {
-                    Assert.AreEqual("Test the description", categoryRequest.description);
+                    Assert.AreEqual("2022-03-04", categoryRequest.f_popup_c_1581927717973);
                 }
             }
 
