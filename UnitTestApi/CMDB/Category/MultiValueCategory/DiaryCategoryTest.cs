@@ -20,7 +20,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         string URL;
         string APIKEY;
         string LANGUAGE;
-
+        ProxySettings proxySettings = new ProxySettings();
         [TestInitialize]
         public void Setup()
         {
@@ -42,7 +42,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             int cateId, objectId;
             List<DiaryResponse[]> list = new List<DiaryResponse[]>();
             DiaryRequset categoryRequest = new DiaryRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -85,7 +85,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Arrange
             int cateId, objectId;
             List<DiaryResponse[]> list = new List<DiaryResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -129,7 +129,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         {
             //Arrange
             int cateId, objectId;
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -161,7 +161,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Arrange
             int cateId, objectIdServer, objectIdPerson01, objectIdPerson02;
             List<DiaryResponse[]> list = new List<DiaryResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Result readObject = new Result();
@@ -234,7 +234,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Arrange
             int cateId, objectId;
             List<DiaryResponse[]> list = new List<DiaryResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);

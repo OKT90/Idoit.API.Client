@@ -18,6 +18,7 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
         string URL;
         string APIKEY;
         string LANGUAGE;
+        ProxySettings proxySettings = new ProxySettings();
 
         [TestInitialize]
         public void Setup()
@@ -26,6 +27,10 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
             DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
             APIKEY = DotNetEnv.Env.GetString("APIKEY");
             LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
+            proxySettings.proxyAddress = DotNetEnv.Env.GetString("ADDRESS");
+            proxySettings.proxyPort = DotNetEnv.Env.GetString("PORT");
+            proxySettings.proxyUserName = DotNetEnv.Env.GetString("USERNAME");
+            proxySettings.proxyPassword = DotNetEnv.Env.GetString("PASSWORD");
         }
         //Read
         [TestMethod]
@@ -37,7 +42,7 @@ namespace UnitTestApi.CMDB.ObjectTypeCategories
             List<Customs> customlist = new List<Customs>();
             ObjectTypeCategoriesResult objectTypeCategoriesResult = new ObjectTypeCategoriesResult();
 
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             ObjectTypesRead request = new ObjectTypesRead(myClient);

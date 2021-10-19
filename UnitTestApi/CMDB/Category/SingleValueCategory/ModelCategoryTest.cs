@@ -21,14 +21,21 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         string URL;
         string APIKEY;
         string LANGUAGE;
-        public   ModelCategoryTest()
+        ProxySettings proxySettings = new ProxySettings();
+
+        [TestInitialize]
+        public void Setup()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path);
-             URL = DotNetEnv.Env.GetString("URL");
+            DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
             APIKEY = DotNetEnv.Env.GetString("APIKEY");
             LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
+            proxySettings.proxyAddress = DotNetEnv.Env.GetString("ADDRESS");
+            proxySettings.proxyPort = DotNetEnv.Env.GetString("PORT");
+            proxySettings.proxyUserName = DotNetEnv.Env.GetString("USERNAME");
+            proxySettings.proxyPassword = DotNetEnv.Env.GetString("PASSWORD");
         }
+
         //[Ignore]
         //Create
         [TestMethod]
@@ -38,7 +45,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
              int cateId, objectId;
             List<ModelResponse[]> list = new List<ModelResponse[]>();
             ModelRequset categoryRequest = new ModelRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -85,7 +92,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 
             //Arrange
             int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -116,7 +123,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Arrange
             int cateId, objectId;
              List<ModelResponse[]> list = new List<ModelResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -166,7 +173,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Arrange
             int cateId, objectId;
              List<ModelResponse[]> list = new List<ModelResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);

@@ -22,16 +22,19 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         string URL;
         string APIKEY;
         string LANGUAGE;
-        public   AccessCategoryTest()
+        ProxySettings proxySettings = new ProxySettings();
+
+        [TestInitialize]
+        public void Setup()
         {
-            /*You can find the Api.env in the following path:-
-             *Idoit.API.Client\UnitTestApi\bin\Debug\Data
-             */
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path);
-            URL = DotNetEnv.Env.GetString("URL");
+            DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
             APIKEY = DotNetEnv.Env.GetString("APIKEY");
             LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
+            proxySettings.proxyAddress = DotNetEnv.Env.GetString("ADDRESS");
+            proxySettings.proxyPort = DotNetEnv.Env.GetString("PORT");
+            proxySettings.proxyUserName = DotNetEnv.Env.GetString("USERNAME");
+            proxySettings.proxyPassword = DotNetEnv.Env.GetString("PASSWORD");
         }
 
 
@@ -43,7 +46,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
              int cateId,objectId;
             List<AccessResponse[]> list = new List<AccessResponse[]>();
             AccessRequset categoryRequest = new AccessRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -90,7 +93,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Arrange
              int cateId, objectId;
             List<AccessResponse[]> list = new List<AccessResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -136,7 +139,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
 
             //Arrange
             int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -167,7 +170,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Arrange
             int cateId, objectId;
              List<AccessResponse[]> list = new List<AccessResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
@@ -220,7 +223,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Arrange
             int cateId, objectId;
              List<AccessResponse[]> list = new List<AccessResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);

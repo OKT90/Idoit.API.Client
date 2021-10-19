@@ -20,12 +20,19 @@ namespace UnitTestApi.CMDB.Objects
         string URL;
         string APIKEY;
         string LANGUAGE;
-        public ObjectsTest()
+        ProxySettings proxySettings = new ProxySettings();
+
+        [TestInitialize]
+        public void Setup()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
             DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
             APIKEY = DotNetEnv.Env.GetString("APIKEY");
             LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
+            proxySettings.proxyAddress = DotNetEnv.Env.GetString("ADDRESS");
+            proxySettings.proxyPort = DotNetEnv.Env.GetString("PORT");
+            proxySettings.proxyUserName = DotNetEnv.Env.GetString("USERNAME");
+            proxySettings.proxyPassword = DotNetEnv.Env.GetString("PASSWORD");
         }
 
         //Read
@@ -34,7 +41,7 @@ namespace UnitTestApi.CMDB.Objects
         {
             //Arrange
             List<Result[]> lists = new List<Result[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
+            Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             ObjectsRead request = new ObjectsRead(myClient);
