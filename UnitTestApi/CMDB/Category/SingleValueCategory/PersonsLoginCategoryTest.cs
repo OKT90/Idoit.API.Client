@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Idoit.API.Client;
 using Idoit.API.Client.CMDB.Object.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model = Idoit.API.Client.CMDB.Category.Model;
-using ModelRequset = Idoit.API.Client.CMDB.Category.Request.Model;
-using ModelResponse = Idoit.API.Client.CMDB.Category.Response.Model;
+using PersonsLogin = Idoit.API.Client.CMDB.Category.PersonsLogin;
+using PersonsLoginRequset = Idoit.API.Client.CMDB.Category.Request.PersonsLogin;
+using PersonsLoginResponse = Idoit.API.Client.CMDB.Category.Response.PersonsLogin;
 using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
 using Obj = Idoit.API.Client.CMDB.Object.Object;
 using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
@@ -16,7 +16,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 {
     //[Ignore]
     [TestClass]
-    public class ModelCategoryTest
+    public class PersonsLoginCategoryTest
     {
         string URL;
         string APIKEY;
@@ -36,128 +36,122 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             proxySettings.proxyPassword = DotNetEnv.Env.GetString("PASSWORD");
         }
 
-        //[Ignore]
         //Create
         [TestMethod]
         public void CreateTest()
         {
             //Arrange
-             int cateId, objectId;
-            List<ModelResponse[]> list = new List<ModelResponse[]>();
-            ModelRequset categoryRequest = new ModelRequset();
+            int cateId, objectId;
+            List<PersonsLoginResponse[]> list = new List<PersonsLoginResponse[]>();
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            Model model = new Model(myClient);
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
- 
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person1";
+
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.title = "Web GUI";
-            categoryRequest.manufacturer=1;
-            categoryRequest.description = "Web GUI description";
-            cateId = model.Create(objectId, categoryRequest);
-           
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.description = "description";
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
+
             //Assert
             Assert.IsNotNull(cateId);
 
             //Act: Read the Category
-            list = model.Read(objectId);
-
+            list = PersonsLogin.Read(objectId);
 
             //Assert
-            foreach (ModelResponse[] row in list)
+            foreach (PersonsLoginResponse[] row in list)
             {
-                foreach (ModelResponse element in row)
+                foreach (PersonsLoginResponse element in row)
                 {
-                    Assert.IsNotNull(element.title);
                     Assert.IsNotNull(element.id);
+                    Assert.AreEqual(element.disabledLogin.title, "Yes");
                 }
             }
 
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
-        
-        //[Ignore]
+
         //Quickpurge
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType. PERSON;
+            objectRequest.title = "Person1";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.title = "Web GUI";
-            categoryRequest.description = "Web GUI description";
-            categoryRequest.manufacturer = 1;
-            cateId = model.Create(objectId, categoryRequest);
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.title = "Test";
+            categoryRequest.user_pass = "Password1234";
+            categoryRequest.user_pass2 = "Password1234";
+            categoryRequest.description = "description";
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Act
-            model.Quickpurge(objectId, cateId);
+            PersonsLogin.Quickpurge(objectId, cateId);
         }
 
-        //[Ignore]
         //Update
         [TestMethod]
         public void UpdateTest()
         {
             //Arrange
             int cateId, objectId;
-             List<ModelResponse[]> list = new List<ModelResponse[]>();
+            List<PersonsLoginResponse[]> list = new List<PersonsLoginResponse[]>();
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person 1";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.title = "Web GUI";
-            categoryRequest.description = "Web GUI description";
-            categoryRequest.manufacturer = 1;
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.description = "description";
 
-            cateId = model.Create(objectId, categoryRequest);
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Act: Update the Category
-            categoryRequest.title = "Web GUI 2";
-            categoryRequest.description = "Web GUI 2 description";
+            categoryRequest.disabled_login = "No";
 
-            model.Update(objectId, categoryRequest);
+            PersonsLogin.Update(objectId, categoryRequest);
 
             //Act:Read the Category
-             list = model.Read(objectId);
+            list = PersonsLogin.Read(objectId);
 
             //Assert
-            foreach (ModelResponse[] row in list)
+            foreach (PersonsLoginResponse[] row in list)
             {
-                foreach (ModelResponse element in row)
+                foreach (PersonsLoginResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI 2", categoryRequest.title);
+                    Assert.AreEqual("No", categoryRequest.disabled_login);
                 }
             }
             //Act:Delete the Object
@@ -165,43 +159,42 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 
         }
 
-        //[Ignore]
         //Read
         [TestMethod]
         public void ReadTest()
         {
             //Arrange
             int cateId, objectId;
-             List<ModelResponse[]> list = new List<ModelResponse[]>();
+            List<PersonsLoginResponse[]> list = new List<PersonsLoginResponse[]>();
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType. CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person 1";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.title = "Web GUI";
-            categoryRequest.description = "Web GUI description";
-            categoryRequest.manufacturer = 1;
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.description = "description";
 
-            cateId = model.Create(objectId, categoryRequest);
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Act:Read the Category
-             list = model.Read(objectId);
+            list = PersonsLogin.Read(objectId);
 
             //Assert
-            foreach (ModelResponse[] row in list)
+            foreach (PersonsLoginResponse[] row in list)
             {
-                foreach (ModelResponse element in row)
+                foreach (PersonsLoginResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI", categoryRequest.title);
+                    Assert.AreEqual("description", categoryRequest.description);
+                    Assert.AreEqual("Yes", categoryRequest.disabled_login);
                 }
             }
 
