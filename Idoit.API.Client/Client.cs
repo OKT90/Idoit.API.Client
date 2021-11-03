@@ -12,6 +12,7 @@ using Idoit.API.Client.ApiException;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net;
+using System.Security.Authentication;
 
 namespace Idoit.API.Client
 {
@@ -68,7 +69,11 @@ namespace Idoit.API.Client
         // Basic auth
         public HttpClient GetClient()
         {
-            var handler = new HttpClientHandler();
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            var handler = new HttpClientHandler()
+            {
+                SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls
+            };
             WebProxy proxy;
             if (!string.IsNullOrEmpty(ProxySettings.proxyAddress))
             {

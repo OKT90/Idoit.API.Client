@@ -67,7 +67,6 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Act: Read the Category
             list = PersonsLogin.Read(objectId);
 
-
             //Assert
             foreach (PersonsLoginResponse[] row in list)
             {
@@ -86,7 +85,6 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
