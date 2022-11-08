@@ -11,6 +11,8 @@ using Idoit.API.Client.Idoit;
 using Idoit.API.Client.ApiException;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net;
+using System.Security.Authentication;
 
 namespace Idoit.API.Client
 {
@@ -23,12 +25,14 @@ namespace Idoit.API.Client
         public string Password;
         public string sessionId;
         JsonRpcClient JsonRpcClient;
+        ProxySettings ProxySettings;
 
-        public Client(string url, string apikey, string language)
+        public Client(string url, string apikey, string language, ProxySettings proxySettings)
         {
             Language = language;
             Apikey = apikey;
             Url = url;
+            ProxySettings = proxySettings;
         }
         public JsonRpcClient GetConnection()
         {
@@ -60,14 +64,29 @@ namespace Idoit.API.Client
             { DefaultValueHandling = DefaultValueHandling.Ignore });
             object data = JsonConvert.DeserializeObject(Json);
             return data;
-        }       
+        }
+
         // Basic auth
         public HttpClient GetClient()
         {
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            var handler = new HttpClientHandler()
+            {
+                SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls
+            };
+            WebProxy proxy;
+            if (!string.IsNullOrEmpty(ProxySettings.proxyAddress))
+            {
+                handler.DefaultProxyCredentials = CredentialCache.DefaultCredentials;
+                proxy = new WebProxy(ProxySettings.proxyAddress + ":" + ProxySettings.proxyPort, true);
+                proxy.Credentials = new NetworkCredential(ProxySettings.proxyUserName, ProxySettings.proxyPassword);
+                WebRequest.DefaultWebProxy = proxy;
+                handler.Proxy = proxy;
+            }
             if (sessionId == null)
             {
                 var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Username}:{Password}")));
-                var client = new HttpClient()
+                var client = new HttpClient(handler)
                 {
                     DefaultRequestHeaders = { Authorization = authValue }
                 };
@@ -76,7 +95,7 @@ namespace Idoit.API.Client
             else
             {
                 var authValue = new AuthenticationHeaderValue("Session", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{sessionId}")));
-                var client = new HttpClient()
+                var client = new HttpClient(handler)
                 {
                     DefaultRequestHeaders = { Authorization = authValue }
                 };

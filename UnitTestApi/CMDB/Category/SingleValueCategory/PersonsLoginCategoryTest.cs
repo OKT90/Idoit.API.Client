@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Idoit.API.Client;
 using Idoit.API.Client.CMDB.Object.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Location = Idoit.API.Client.CMDB.Category.Location;
-using LocationRequset = Idoit.API.Client.CMDB.Category.Request.Location;
-using LocationResponse = Idoit.API.Client.CMDB.Category.Response.Location;
+using PersonsLogin = Idoit.API.Client.CMDB.Category.PersonsLogin;
+using PersonsLoginRequset = Idoit.API.Client.CMDB.Category.Request.PersonsLogin;
+using PersonsLoginResponse = Idoit.API.Client.CMDB.Category.Response.PersonsLogin;
 using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
 using Obj = Idoit.API.Client.CMDB.Object.Object;
 using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
@@ -16,7 +16,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 {
     //[Ignore]
     [TestClass]
-    public class LocationCategoryTest
+    public class PersonsLoginCategoryTest
     {
         string URL;
         string APIKEY;
@@ -36,48 +36,44 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             proxySettings.proxyPassword = DotNetEnv.Env.GetString("PASSWORD");
         }
 
-        //[Ignore]
         //Create
         [TestMethod]
         public void CreateTest()
         {
             //Arrange
             int cateId, objectId;
-            List<LocationResponse[]> list = new List<LocationResponse[]>();
-            LocationRequset categoryRequest = new LocationRequset();
+            List<PersonsLoginResponse[]> list = new List<PersonsLoginResponse[]>();
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            Location Location = new Location(myClient);
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person1";
 
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            
-            categoryRequest.description = "Web GUI description";
-            categoryRequest.latitude = "12";
-            categoryRequest.longitude = "323";
-            categoryRequest.snmp_syslocation = "23";
-            cateId = Location.Create(objectId, categoryRequest);
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.description = "description";
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Assert
             Assert.IsNotNull(cateId);
 
             //Act: Read the Category
-            list = Location.Read(objectId);
-
+            list = PersonsLogin.Read(objectId);
 
             //Assert
-            foreach (LocationResponse[] row in list)
+            foreach (PersonsLoginResponse[] row in list)
             {
-                foreach (LocationResponse element in row)
+                foreach (PersonsLoginResponse element in row)
                 {
                     Assert.IsNotNull(element.id);
+                    Assert.AreEqual(element.disabledLogin.title, "Yes");
                 }
             }
 
@@ -85,84 +81,77 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             objectRequest.Delete(objectId);
         }
 
-        //[Ignore]
         //Quickpurge
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            LocationRequset categoryRequest = new LocationRequset();
-            Location Location = new Location(myClient);
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType. PERSON;
+            objectRequest.title = "Person1";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.latitude = "12";
-            categoryRequest.longitude = "323";
-            categoryRequest.snmp_syslocation = "23";
-            categoryRequest.description = "Web GUI description";
-            cateId = Location.Create(objectId, categoryRequest);
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.title = "Test";
+            categoryRequest.user_pass = "Password1234";
+            categoryRequest.user_pass2 = "Password1234";
+            categoryRequest.description = "description";
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Act
-            Location.Quickpurge(objectId, cateId);
+            PersonsLogin.Quickpurge(objectId, cateId);
         }
 
-        //[Ignore]
         //Update
         [TestMethod]
         public void UpdateTest()
         {
             //Arrange
             int cateId, objectId;
-            List<LocationResponse[]> list = new List<LocationResponse[]>();
+            List<PersonsLoginResponse[]> list = new List<PersonsLoginResponse[]>();
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            LocationRequset categoryRequest = new LocationRequset();
-            Location Location = new Location(myClient);
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person 1";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.latitude = "12";
-            categoryRequest.longitude = "323";
-            categoryRequest.snmp_syslocation = "23";
-            categoryRequest.description = "Web GUI description";
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.description = "description";
 
-            cateId = Location.Create(objectId, categoryRequest);
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Act: Update the Category
-            categoryRequest.latitude = "12";
-            categoryRequest.longitude = "323";
-            categoryRequest.snmp_syslocation = "23";
-            categoryRequest.description = "Web GUI 2 description";
+            categoryRequest.disabled_login = "No";
 
-            Location.Update(objectId, categoryRequest);
+            PersonsLogin.Update(objectId, categoryRequest);
 
             //Act:Read the Category
-            list = Location.Read(objectId);
+            list = PersonsLogin.Read(objectId);
 
             //Assert
-            foreach (LocationResponse[] row in list)
+            foreach (PersonsLoginResponse[] row in list)
             {
-                foreach (LocationResponse element in row)
+                foreach (PersonsLoginResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI 2 description", categoryRequest.description);
+                    Assert.AreEqual("No", categoryRequest.disabled_login);
                 }
             }
             //Act:Delete the Object
@@ -170,44 +159,42 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 
         }
 
-        //[Ignore]
         //Read
         [TestMethod]
         public void ReadTest()
         {
             //Arrange
             int cateId, objectId;
-            List<LocationResponse[]> list = new List<LocationResponse[]>();
+            List<PersonsLoginResponse[]> list = new List<PersonsLoginResponse[]>();
             Client myClient = new Client(URL, APIKEY, LANGUAGE, proxySettings);
             myClient.Username = "admin";
             myClient.Password = "admin";
             Obj objectRequest = new Obj(myClient);
-            LocationRequset categoryRequest = new LocationRequset();
-            Location Location = new Location(myClient);
+            PersonsLoginRequset categoryRequest = new PersonsLoginRequset();
+            PersonsLogin PersonsLogin = new PersonsLogin(myClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = ObjectType.PERSON;
+            objectRequest.title = "Person 1";
             objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            categoryRequest.latitude = "12";
-            categoryRequest.longitude = "323";
-            categoryRequest.snmp_syslocation = "23";
-            categoryRequest.description = "Web GUI description";
+            categoryRequest.disabled_login = "Yes";
+            categoryRequest.description = "description";
 
-            cateId = Location.Create(objectId, categoryRequest);
+            cateId = PersonsLogin.Create(objectId, categoryRequest);
 
             //Act:Read the Category
-            list = Location.Read(objectId);
+            list = PersonsLogin.Read(objectId);
 
             //Assert
-            foreach (LocationResponse[] row in list)
+            foreach (PersonsLoginResponse[] row in list)
             {
-                foreach (LocationResponse element in row)
+                foreach (PersonsLoginResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI description", categoryRequest.description);
+                    Assert.AreEqual("description", categoryRequest.description);
+                    Assert.AreEqual("Yes", categoryRequest.disabled_login);
                 }
             }
 
