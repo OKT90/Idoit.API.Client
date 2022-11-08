@@ -83,7 +83,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
-        
+
         //[Ignore]
         //Quickpurge
         [TestMethod]

@@ -160,7 +160,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             cateId = access.Create(objectId, categoryRequest);
 
             //Act
-            access.Quickpurge(objectId, cateId); 
+            access.Quickpurge(objectId, cateId);
         }
 
         //Update
