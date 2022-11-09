@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CMDB\Category\MultiValueCategory\AccessCategoryTest.cs" />
+    <Compile Include="CMDB\Category\MultiValueCategory\ContactAssignmentCategoryTest.cs" />
     <Compile Include="CMDB\Category\MultiValueCategory\DiaryCategoryTest.cs" />
     <Compile Include="CMDB\Category\MultiValueCategory\IPCategoryTest.cs" />
     <Compile Include="CMDB\Category\SingleValueCategory\PersonsLoginCategoryTest.cs" />
