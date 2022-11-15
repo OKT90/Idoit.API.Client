@@ -1,8 +1,5 @@
 ﻿using Idoit.API.Client.CMDB.Category.Response.Attribute;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Idoit.API.Client.CMDB.Category.Response
 {
@@ -21,7 +18,7 @@ namespace Idoit.API.Client.CMDB.Category.Response
         [JsonProperty("primary")]
         public Primary primary { get; set; }
         [JsonProperty("role")]
-        public string role { get; set; }
+        public Role role { get; set; }
         [JsonProperty("contact_list")]
         public string contactList { get; set; }
         [JsonProperty("description")]
